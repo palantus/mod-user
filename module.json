@@ -1,0 +1,5 @@
+{
+	"main" : "UserModule.js",
+	"deps": ["database"],
+	"enableAuth": true
+}
