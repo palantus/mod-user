@@ -1,6 +1,5 @@
 var _IsLoggedIn = undefined;
 
-
 function checkIfLoggedInAndTriggerEvent(notifyLoggedOutEveryTime){
 	request({module:"user", type: "IsLoggedIn"}, function(res){
 
@@ -21,8 +20,11 @@ function checkIfLoggedInAndTriggerEvent(notifyLoggedOutEveryTime){
 	
 }
 
+var lastIsLoggedInErrorCheck = 0;
 $(document).bind('request_error', function(){
-	checkIfLoggedInAndTriggerEvent(true);
+	if(new Date().getTime() > lastIsLoggedInErrorCheck + 1000) //Only notify about login errors every sec
+		checkIfLoggedInAndTriggerEvent(true);
+	lastIsLoggedInErrorCheck = new Date().getTime();
 });
 
 setInterval(checkIfLoggedInAndTriggerEvent, 10000);
