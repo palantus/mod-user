@@ -37,8 +37,10 @@ function loadModule_Login(){
  						t.element.find("#logincontrols").show();
  						t.element.find("#logoutcontrols").hide();
 
- 						t.element.find("#loginusername").val($.cookie("username"));
+						var storedUsername = localStorage.getItem("username");
+ 						t.element.find("#loginusername").val(storedUsername != null ? storedUsername : "");
  						$(document).trigger("LoggedOut");
+ 						t.element.find("#loginusername").focus();	
  					}
 				}
 
@@ -57,7 +59,7 @@ function loadModule_Login(){
 					request({module:"user", type: "login", UserName: username, Password: password}, function(res){
 						if(res.success){
 							setLoggedIn(true);
-							$.cookie("username", username);
+							localStorage.setItem("username", username);
 						}
 						else
 							alert("Wrong username/password combination.");
