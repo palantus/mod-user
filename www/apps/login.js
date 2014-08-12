@@ -60,6 +60,8 @@ function loadModule_Login(){
 						if(res.success){
 							setLoggedIn(true);
 							localStorage.setItem("username", username);
+							if(getUrlVar("redirectTo"))
+								window.location = getUrlVar("redirectTo");
 						}
 						else
 							alert("Wrong username/password combination.");
